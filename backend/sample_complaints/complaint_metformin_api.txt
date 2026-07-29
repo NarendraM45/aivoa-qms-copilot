@@ -1,0 +1,35 @@
+CUSTOMER COMPLAINT REPORT - API DIVISION
+=========================================
+
+Date of Complaint: July 29, 2026
+Complaint Reference: CC-2026-0712A
+
+Complainant Information:
+- Organization: MediCure Formulations Pvt. Ltd.
+- Contact Person: Mr. Suresh Kumar, QC Manager
+- Contact: suresh.k@medicure.co.in | +91 22 4510 2300
+- Complaint Source: Email
+
+Product Information:
+- Product Name: Metformin Hydrochloride API
+- Product Strength/Grade: IP/BP
+- Batch/LOT Number: MFH260712A
+- Manufacturing Date: 2026-07-12
+- Expiry Date: 2028-07-11
+- Quantity Supplied: 500 kg (10 HDP drums × 50 kg each)
+- Quantity Affected: 50 kg (1 HDP drum)
+
+Complaint Description:
+During incoming quality control testing of Metformin Hydrochloride API batch MFH260712A,
+one drum out of 10 received drums showed assay results at 97.2% against the specification
+of NLT 98.0% (as per IP monograph). The moisture content of the same drum was found to be
+0.85% against the specification of NMT 0.5%. Other drums from the same batch tested within
+specification. The affected drum was drum #7 (sequential labeling MFH260712A-D07).
+
+Visual inspection of the affected drum showed no abnormalities in the physical appearance
+of the API powder. No foreign particles, discoloration, or clumping was observed.
+
+The complainant has quarantined the affected drum and requests investigation and replacement.
+All remaining 9 drums are on hold pending resolution.
+
+Supporting Documents Attached: COA, in-house testing report, drum photographs.
