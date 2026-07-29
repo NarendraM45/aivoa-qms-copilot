@@ -2,6 +2,8 @@
 
 AI-powered customer complaint management module for a pharmaceutical (API & FDF) manufacturer's Quality Management System (QMS). Features a chat-driven AI co-pilot that extracts complaint details, populates forms, and assesses risk — all through natural language.
 
+![AIVOA QMS Copilot Demo](demo.png)
+
 ---
 
 ## Demo Flow
