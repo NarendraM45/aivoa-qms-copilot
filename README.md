@@ -23,11 +23,11 @@ User says "sorry, batch is X" ──► AI updates only that field
 | Frontend | React 19 + Redux Toolkit + RTK Query + Tailwind CSS v4 |
 | Backend | Python 3.12, FastAPI, Pydantic v2, SQLAlchemy 2.0 (async) |
 | AI Agent | LangGraph + LangChain tool calling |
-| LLM | Groq API — `llama-3.3-70b-versatile` |
+| LLM | Groq API — `openai/gpt-oss-120b` |
 | Database | PostgreSQL 15+ (via asyncpg) |
 | Font | Google Inter |
 
-> **Note on model:** The assignment specifies `gemma2-9b-it`, but Groq deprecated it on October 8, 2025. Using `llama-3.3-70b-versatile` (the assignment's own alternative). Both model names are configured via `.env` — never hardcoded.
+> **Note on model:** The assignment specifies `gemma2-9b-it`, but Groq deprecated it on October 8, 2025. We are using `openai/gpt-oss-120b` to future-proof the demo against upcoming model deprecations. Model names are configured via `.env` — never hardcoded.
 
 ---
 
@@ -329,8 +329,8 @@ Two sample files in `backend/sample_complaints/` for demoing document extraction
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `GROQ_API_KEY` | (required) | Your Groq API key |
-| `GROQ_MODEL_FAST` | `llama-3.3-70b-versatile` | Model for fast tasks |
-| `GROQ_MODEL_REASONING` | `llama-3.3-70b-versatile` | Model for reasoning tasks |
+| `GROQ_MODEL_FAST` | `openai/gpt-oss-120b` | Model for fast tasks |
+| `GROQ_MODEL_REASONING` | `openai/gpt-oss-120b` | Model for reasoning tasks |
 | `DATABASE_URL` | `postgresql+asyncpg://user:password@localhost:5432/pcms` | PostgreSQL connection string |
 | `MAX_UPLOAD_MB` | `10` | Max file upload size |
 | `CORS_ORIGINS` | `http://localhost:5173` | Allowed CORS origins |
@@ -356,4 +356,4 @@ alembic upgrade head
 2. **Groq rate limits** — Free tier is 30 RPM / 12,000 RPD. Rapid interactions may see delays.
 3. **No OCR** — File parser handles text-based PDFs only, not scanned images.
 4. **Chat is the only input method** — Form fields can be manually edited after AI fills them, but the primary input is always through chat.
-5. **Model deprecation** — `gemma2-9b-it` deprecated Oct 2025. Using `llama-3.3-70b-versatile`. Model names are in `.env` for easy swapping.
+5. **Model deprecation** — `gemma2-9b-it` deprecated Oct 2025. Using `openai/gpt-oss-120b`. Model names are in `.env` for easy swapping.
