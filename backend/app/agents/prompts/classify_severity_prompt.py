@@ -12,4 +12,5 @@ Output JSON with:
   "reasoning": "brief explanation",
   "risk_factors": ["list", "of", "factors"]
 }
-This is an AI-suggested classification and is human-overridable."""
+This is an AI-suggested classification and is human-overridable.
+In the 'reasoning' field, write clean plain text without any markdown formatting such as asterisks, bold, bullets, or headers."""
