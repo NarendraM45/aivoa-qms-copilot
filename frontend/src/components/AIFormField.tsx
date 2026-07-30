@@ -37,7 +37,7 @@ const AIFormField: React.FC<Props> = ({ fieldName, label, type, options, placeho
 
   const isLowConfidence = fieldData?.confidence !== null && fieldData?.confidence < 0.5;
 
-  const baseInputClass = `w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors ${
+  const baseInputClass = `w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors read-only:bg-slate-50 read-only:cursor-not-allowed disabled:bg-slate-50 disabled:cursor-not-allowed ${
     highlight ? 'bg-blue-50 border-blue-300' : 
     isLowConfidence ? 'bg-red-50 border-red-300' : 'bg-white border-slate-300'
   }`;
@@ -59,16 +59,16 @@ const AIFormField: React.FC<Props> = ({ fieldName, label, type, options, placeho
       </div>
       
       {type === 'select' && options ? (
-        <select value={fieldData?.value || ''} onChange={handleChange} className={baseInputClass}>
+        <select disabled value={fieldData?.value || ''} onChange={handleChange} className={baseInputClass}>
           <option value="" disabled>{placeholder}</option>
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
       ) : type === 'textarea' ? (
-        <textarea value={fieldData?.value || ''} onChange={handleChange} placeholder={placeholder} className={`${baseInputClass} min-h-[100px] resize-y`} />
+        <textarea readOnly value={fieldData?.value || ''} onChange={handleChange} placeholder={placeholder} className={`${baseInputClass} min-h-[100px] resize-y`} />
       ) : (
-        <input type={type} value={fieldData?.value || ''} onChange={handleChange} placeholder={placeholder} className={baseInputClass} />
+        <input readOnly type={type} value={fieldData?.value || ''} onChange={handleChange} placeholder={placeholder} className={baseInputClass} />
       )}
     </div>
   );
