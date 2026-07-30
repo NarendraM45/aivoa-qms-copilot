@@ -257,9 +257,9 @@ const AIAssistantChat: React.FC = () => {
             onKeyDown={handleKeyDown}
             placeholder="Describe a complaint, correction, or ask a question..."
             disabled={isProcessing}
-            rows={1}
+            rows={3}
             className="flex-1 resize-none rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none disabled:opacity-50 max-h-32 placeholder:text-slate-400"
-            style={{ minHeight: '42px' }}
+            style={{ minHeight: '80px' }}
           />
           
           {/* Send button */}
