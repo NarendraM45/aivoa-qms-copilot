@@ -36,10 +36,15 @@ def log_complaint(
     priority (low/medium/high/urgent), recommended next action, and justification.
     
     Rules:
-    - complaint_source: phone, email, letter, portal, or sales_rep
+    - complaint_description: write a detailed 2-3 sentence professional summary including reporter, product, defect, quantity, and dates.
+    - complaint_source: phone, email, letter, portal, sales_rep, or pharmacy. If the reporter is a pharmacy, hospital, or clinic, use 'pharmacy'.
+    - customer_name: Always extract the reporting entity name (e.g., 'Apollo Pharmacy' from 'Apollo Pharmacy reported...')
     - complaint_type: product_quality, packaging, adverse_event, delivery, documentation, or other
-    - severity: minor (cosmetic/packaging), major (quality defect), critical (adverse event/health risk)
+    - complaint_date: If not explicitly mentioned, use today's date in YYYY-MM-DD format.
+    - severity: minor (trivial cosmetic, no product impact), major (any product quality defect like discoloration, chipping, broken seals, contamination suspicion), critical (adverse event/health risk/patient safety)
     - priority: based on severity + quantity + patient exposure risk
+    - next_action: For major, use 'Route to QA Investigation & Issue Replacement'. For critical, use 'Initiate field alert'.
+    - justification: Provide a detailed root cause hypothesis.
     - Normalize dates to YYYY-MM-DD format
     - Only extract what is explicitly stated. Never fabricate values.
     """
