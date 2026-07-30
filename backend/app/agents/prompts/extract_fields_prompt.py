@@ -4,10 +4,12 @@ in the schema below, using ONLY information explicitly present in the text.
 
 Rules:
 - If a field is not mentioned, set it to null. Never fabricate a plausible-sounding value.
+- Extract the reporting entity name as customer_name. For example, from 'Apollo Pharmacy reported...' extract 'Apollo Pharmacy'. From 'Priya Nair, Sunrise Hospital' extract the full name.
 - Normalize dates to YYYY-MM-DD. If only a partial date is given (e.g. "July 2026"), use
   the 1st of that month and note this in source_snippet.
-- complaint_source must be one of: phone, email, letter, portal, sales_rep. Infer from context if possible.
-- complaint_type must be one of: product_quality, packaging, adverse_event, delivery, documentation, other.
+- complaint_source must be one of: phone, email, letter, portal, sales_rep, pharmacy. Infer from context if possible. If the text mentions a pharmacy, hospital, clinic, or retail store as the reporter, infer 'pharmacy' as the source.
+- complaint_type must be one of: product_quality, packaging, adverse_event, delivery, documentation, other. Always infer from the description. Discoloration, chipping, broken, defective = product_quality. Wrong label, missing label = packaging. Patient reaction, side effect = adverse_event.
+- complaint_date: If no explicit complaint date is mentioned in the text, use today's date in YYYY-MM-DD format. Today's date should be inferred from context or set as the current date.
 - initial_severity is a SUGGESTED starting point for human triage, not a final determination — lean toward high/critical only when health-risk language is explicit.
 - priority must be one of: low, medium, high, urgent.
 - For every non-null field, return a confidence score (0.0–1.0) and the exact source phrase you based it on.
