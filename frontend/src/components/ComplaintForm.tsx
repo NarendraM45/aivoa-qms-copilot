@@ -2,6 +2,7 @@ import React from 'react';
 import FormSection from './FormSection';
 import AIFormField from './AIFormField';
 import FormActions from './FormActions';
+import RiskAssessmentPanel from './RiskAssessment';
 
 const ComplaintForm: React.FC = () => {
   return (
@@ -16,7 +17,7 @@ const ComplaintForm: React.FC = () => {
             options={[
               {value: 'phone', label: 'Phone'}, {value: 'email', label: 'Email'}, 
               {value: 'letter', label: 'Letter'}, {value: 'portal', label: 'Portal'}, 
-              {value: 'sales_rep', label: 'Sales Rep'}
+              {value: 'sales_rep', label: 'Sales Rep'}, {value: 'pharmacy', label: 'Pharmacy'}
             ]} 
           />
           <AIFormField fieldName="customer_name" label="Customer Name" type="text" />
@@ -60,6 +61,10 @@ const ComplaintForm: React.FC = () => {
             {value: 'high', label: 'High'}, {value: 'urgent', label: 'Urgent'}
           ]} />
         </FormSection>
+
+        <div className="mt-6">
+          <RiskAssessmentPanel />
+        </div>
       </div>
 
       <FormActions />
