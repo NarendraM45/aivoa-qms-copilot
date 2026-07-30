@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetForm } from '../store/complaintFormSlice';
+import { setStatus } from '../store/complaintFormSlice';
 import { useCreateComplaintMutation, useUpdateComplaintMutation } from '../store/api';
 import type { RootState } from '../store';
 
@@ -9,12 +9,6 @@ const FormActions: React.FC = () => {
   const formState = useSelector((state: RootState) => state.complaintForm);
   const [createComplaint, { isLoading: isCreating }] = useCreateComplaintMutation();
   const [updateComplaint, { isLoading: isUpdating }] = useUpdateComplaintMutation();
-
-  const handleReset = () => {
-    if (window.confirm('Are you sure you want to reset the form? All data will be lost.')) {
-      dispatch(resetForm());
-    }
-  };
 
   const handleSave = async () => {
     // Basic validation
@@ -33,10 +27,10 @@ const FormActions: React.FC = () => {
     try {
       if (formState.complaintId) {
         await updateComplaint({ id: formState.complaintId, ...payload }).unwrap();
-        alert('Complaint updated successfully!');
+        dispatch(setStatus('ready_to_commit'));
       } else {
         await createComplaint(payload).unwrap();
-        alert('Complaint created successfully!');
+        dispatch(setStatus('ready_to_commit'));
       }
     } catch (err) {
       alert('Failed to save complaint.');
@@ -45,23 +39,27 @@ const FormActions: React.FC = () => {
   };
 
   const isLoading = isCreating || isUpdating;
+  const isFormEmpty = !formState.product_name.value && !formState.complaint_description.value;
 
   return (
-    <div className="border-t border-slate-200 bg-slate-50 p-4 flex items-center justify-between mt-auto">
-      <button 
-        type="button" 
-        onClick={handleReset}
-        className="px-4 py-2 border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 rounded-md font-medium transition-colors"
-      >
-        Reset Form
-      </button>
+    <div className="border-t border-slate-200 bg-white p-4">
       <button 
         type="button"
         onClick={handleSave}
-        disabled={isLoading}
-        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition-colors disabled:opacity-70 flex items-center"
+        disabled={isLoading || isFormEmpty}
+        className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
       >
-        {isLoading ? 'Saving...' : 'Save Complaint'}
+        {isLoading ? (
+          <>
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Committing...
+          </>
+        ) : (
+          'Commit to QMS Ledger'
+        )}
       </button>
     </div>
   );
