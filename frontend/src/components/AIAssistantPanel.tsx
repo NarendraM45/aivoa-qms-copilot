@@ -1,5 +1,4 @@
 import React from 'react';
-import RiskAssessmentPanel from './RiskAssessment';
 import AIAssistantChat from './AIAssistantChat';
 import { Sparkles } from 'lucide-react';
 
@@ -14,15 +13,12 @@ const AIAssistantPanel: React.FC = () => {
           </div>
           <div>
             <h2 className="text-sm font-bold text-slate-800">AIVOA Co-Pilot</h2>
-            <p className="text-[11px] text-slate-500">AI-Powered Quality Assistant</p>
+            <p className="text-[11px] text-slate-500">Drop complaint files or paste text below.</p>
           </div>
         </div>
       </div>
       
-      {/* Risk Assessment Section */}
-      <div className="p-4 border-b border-slate-100 shrink-0">
-        <RiskAssessmentPanel />
-      </div>
+      
       
       {/* Chat Section — fills remaining space */}
       <div className="flex-1 min-h-0 flex flex-col">
