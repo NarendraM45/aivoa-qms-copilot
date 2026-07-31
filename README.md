@@ -83,6 +83,23 @@ After extraction, you can still use edit commands to correct specific fields.
 
 ---
 
+## Bonus AI Features
+
+Six additional AI analysis tools are available via shortcut buttons in the copilot panel. Each one sends a specialized prompt to the AI and returns structured analysis right in the chat.
+
+| Button | What it does |
+|--------|-------------|
+| **Completeness** | Reviews every field in the form, reports which are filled vs missing, gives a completeness % |
+| **Root Cause** | Ishikawa fishbone analysis across 6 categories: Man, Machine, Method, Material, Measurement, Environment |
+| **Duplicates** | Analyzes the complaint pattern (product + batch + defect type) and flags likely duplicate reports |
+| **CAPA** | Recommends Corrective Actions (fix this batch) and Preventive Actions (stop recurrence), referencing ICH Q10 / 21 CFR 211 |
+| **Summary** | Generates a management-ready complaint summary for QA leadership review |
+| **Risk Class.** | Multi-factor risk assessment: Patient Safety, Regulatory Impact, Business Impact, Supply Chain Impact |
+
+These features work through the same copilot chat — no separate screens. Log a complaint first, then click any button to get instant AI analysis.
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -284,9 +301,10 @@ Ai_voova/
         │   ├── FormSection.tsx         # Collapsible section container
         │   ├── AIFormField.tsx         # Smart field (AI badge + confidence)
         │   ├── FormActions.tsx         # Reset / Save buttons
-        │   ├── AIAssistantPanel.tsx    # ★ Right panel (Risk + Chat)
+        │   ├── AIAssistantPanel.tsx    # ★ Right panel (Risk + Features + Chat)
         │   ├── AIAssistantChat.tsx     # ★ Chat with 📎 file upload
-        │   └── RiskAssessment.tsx      # ★ Severity/priority/next action
+        │   ├── RiskAssessment.tsx      # ★ Severity/priority/next action
+        │   └── CopilotFeatureBar.tsx   # ★ 6 bonus AI analysis shortcuts
         │
         ├── hooks/
         │   ├── useWebSocket.ts
