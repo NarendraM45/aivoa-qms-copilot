@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { useSendCopilotMessageMutation } from '../store/api';
@@ -6,7 +6,12 @@ import { addChatMessage, setRiskAssessment } from '../store/aiPanelSlice';
 import { loadFromExtraction } from '../store/complaintFormSlice';
 import { Send, Paperclip, X, FileText, Loader2, Bot, User } from 'lucide-react';
 
-const AIAssistantChat: React.FC = () => {
+export interface AIAssistantChatHandle {
+  sendMessage: (text: string) => void;
+  isProcessing: boolean;
+}
+
+const AIAssistantChat = forwardRef<AIAssistantChatHandle>((_, ref) => {
   const dispatch = useDispatch();
   const [input, setInput] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -41,18 +46,18 @@ const AIAssistantChat: React.FC = () => {
     return fields;
   };
   
-  const handleSend = async () => {
-    const trimmed = input.trim();
-    if (!trimmed && !selectedFile) return;
+  const doSend = async (messageText: string, file?: File | null) => {
+    const trimmed = messageText.trim();
+    if (!trimmed && !file) return;
     
     // Add user message to chat
     const userMsg = {
       id: `msg-${Date.now()}`,
       role: 'user' as const,
-      message: trimmed || `Uploaded: ${selectedFile?.name}`,
+      message: trimmed || `Uploaded: ${file?.name}`,
       timestamp: new Date().toISOString(),
-      hasFile: !!selectedFile,
-      fileName: selectedFile?.name,
+      hasFile: !!file,
+      fileName: file?.name,
     };
     dispatch(addChatMessage(userMsg));
     
@@ -71,21 +76,20 @@ const AIAssistantChat: React.FC = () => {
       formData.append('message', trimmed);
       formData.append('conversation_history', JSON.stringify(history));
       formData.append('current_form_state', JSON.stringify(getCurrentFormValues()));
-      if (selectedFile) {
-        formData.append('file', selectedFile);
+      if (file) {
+        formData.append('file', file);
       }
       
       const result = await sendCopilot(formData).unwrap();
       
       // Apply field updates to the complaint form
       if (result.field_updates && Object.keys(result.field_updates).length > 0) {
-        // Build extraction data format for loadFromExtraction
         const extractedFields: Record<string, any> = {};
         const confidenceScores: Record<string, number> = {};
         
         for (const [key, value] of Object.entries(result.field_updates)) {
           extractedFields[key] = value;
-          confidenceScores[key] = 0.9; // AI-populated fields get high confidence
+          confidenceScores[key] = 0.9;
         }
         
         dispatch(loadFromExtraction({ extractedFields, confidenceScores }));
@@ -123,6 +127,14 @@ const AIAssistantChat: React.FC = () => {
       setSelectedFile(null);
     }
   };
+  
+  const handleSend = () => doSend(input, selectedFile);
+  
+  // Expose sendMessage to parent via ref so feature buttons can trigger sends
+  useImperativeHandle(ref, () => ({
+    sendMessage: (text: string) => doSend(text),
+    isProcessing,
+  }));
   
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -274,6 +286,8 @@ const AIAssistantChat: React.FC = () => {
       </div>
     </div>
   );
-};
+});
+
+AIAssistantChat.displayName = 'AIAssistantChat';
 
 export default AIAssistantChat;
