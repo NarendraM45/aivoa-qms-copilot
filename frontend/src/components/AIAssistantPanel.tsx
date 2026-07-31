@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import RiskAssessmentPanel from './RiskAssessment';
 import AIAssistantChat from './AIAssistantChat';
 import type { AIAssistantChatHandle } from './AIAssistantChat';
 import CopilotFeatureBar from './CopilotFeatureBar';
@@ -26,11 +25,6 @@ const AIAssistantPanel: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      {/* Risk Assessment Section */}
-      <div className="p-4 border-b border-slate-100 shrink-0">
-        <RiskAssessmentPanel />
-      </div>
 
       {/* Bonus Feature Buttons */}
       <CopilotFeatureBar
@@ -38,7 +32,7 @@ const AIAssistantPanel: React.FC = () => {
         disabled={chatRef.current?.isProcessing}
       />
       
-      {/* Chat Section — fills remaining space */}
+      {/* Chat Section — fills all remaining space */}
       <div className="flex-1 min-h-0 flex flex-col">
         <AIAssistantChat ref={chatRef} />
       </div>
