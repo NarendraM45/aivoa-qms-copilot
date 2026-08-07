@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm sticky top-0 z-10">
       <div>
         <h1 className="text-xl font-bold text-blue-700">Log Customer Complaint</h1>
-        <p className="text-sm text-slate-500 font-medium">API & PDF Quality Assurance Module</p>
+        <p className="text-sm text-slate-500 font-medium">API & FDF Quality Assurance Module</p>
       </div>
       <div>
         {status === 'ready_to_commit' ? (
